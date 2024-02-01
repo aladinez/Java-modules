@@ -10,24 +10,23 @@ public class Program {
         for (; query != 42; query = sc.nextInt()){
             // sum of digits
             int sumOfDigits = 0;
-            for (; query > 10; query /= 10){
+            for (; query != 0; query /= 10){
                 sumOfDigits += query % 10;
             }
-            sumOfDigits += query;
-            System.out.println("sum of digits : " + sumOfDigits);
 
             // is Prime
+            int is_prime = 1;
             if (sumOfDigits % 2 == 0){
-                sc.close();
                 continue;
             }
             for (int i = 3; i * i <= sumOfDigits; i += 2){
                 if (sumOfDigits % i == 0){
-                    sc.close();
-                    continue;
+                    is_prime = 0;
+                    break;
                 }
             }
-            coffees++;
+            if (is_prime == 1)
+                coffees++;
         }
         sc.close();
         System.out.println("Count of coffee-request : " + coffees);
