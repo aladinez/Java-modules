@@ -1,7 +1,6 @@
 
 class Program{
     /**
-     * TODO : verify the use of STRING in main
      * @param args
      */
     public static void main(String[] args){
