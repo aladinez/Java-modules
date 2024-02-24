@@ -3,14 +3,37 @@ package Java_Module00.ex03;
 import java.util.Scanner;
 
 public class Program {
+
+    public static long extractDigit(long gradesArray, int i)
+    {
+        long digit = (gradesArray >> (i * 4)) & 0b1111;
+        printBinary((gradesArray >> (i * 4)) & 0b1111);
+        return  digit;
+    }
     
     public static  long storeDigit(long gradesArray,int grade, int i)
     {
-        String binaryString = Long.toBinaryString(gradesArray);
-        System.out.println("Before : Binary representation of " + gradesArray + ": " + binaryString);
         gradesArray = (gradesArray << 4) | grade;
-        return 1;
+        printBinary(gradesArray);
+        return gradesArray;
     }
+
+    public static void printBinary(long gradesArray)
+    {
+        String binaryString = Long.toBinaryString(gradesArray);
+
+        // print leading zeros
+        System.out.print("number of leading zeros :" + Long.numberOfLeadingZeros((long)gradesArray) );
+        for(int i = 0; i < Long.numberOfLeadingZeros(gradesArray); i++) {
+            System.out.print('0');
+        }
+        System.out.println(binaryString);
+        // while(temp.length() < 32) {
+        //     temp = "0" + temp;
+        // }
+        // System.out.println("Binary representation of " + gradesArray + ": " + temp);
+    }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         String week;
@@ -30,24 +53,27 @@ public class Program {
                 System.err.println("IllegalArgument");
                 return;
             }
-            for (int j = 0; j < 5; j++) {
+            for (int j = 0; j < 9; j++) {
                 int tmpGrade = sc.nextInt(); // read grades
-                // System.out.println("tmp grade : " + tmpGrade);
                 if (tmpGrade < grade)
                     grade = tmpGrade;
-                // TDOD : save grade for the current week
+
+                System.out.println("Grade : " + tmpGrade + "iteration : " + j);
+                gradesArray = storeDigit(gradesArray, tmpGrade, i);
             }
-            gradesArray = storeDigit(gradesArray, grade, i);
-            sc.nextLine(); // ignore new line in buffer.
-            // System.out.println("Week | ");
-            for (int a = 0; a < grade; a++) {
-                System.out.print("=");
+            for (int j = 0; j < 9; j++) {
+                long digit = extractDigit(gradesArray, j);
+                System.out.println("Digit : " + digit + "iteration : " + j);
             }
-            System.out.println(">");
-            // sc.close();
-            // sc = new Scanner(System.in);
-            
+            break;
+            // System.out.println("Grade : " + grade);
+            // gradesArray = storeDigit(gradesArray, grade, i);
+            // sc.nextLine(); // ignore new line in buffer.
         }
         sc.close();
+        // for (int a = 0; a < grade; a++) {
+        //     System.out.print("=");
+        // }
+        // System.out.println(">");
     }
 }
