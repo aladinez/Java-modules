@@ -7,7 +7,8 @@ public class Program {
     public static long extractDigit(long gradesArray, int i)
     {
         long digit = (gradesArray >> (i * 4)) & 0b1111;
-        printBinary((gradesArray >> (i * 4)) & 0b1111);
+        System.out.println("Digit : " + digit);
+        printBinary((gradesArray >> (i * 4)));
         return  digit;
     }
     
@@ -23,7 +24,7 @@ public class Program {
         String binaryString = Long.toBinaryString(gradesArray);
 
         // print leading zeros
-        System.out.print("number of leading zeros :" + Long.numberOfLeadingZeros((long)gradesArray) );
+        System.out.print("In binary :" + Long.numberOfLeadingZeros((long)gradesArray) );
         for(int i = 0; i < Long.numberOfLeadingZeros(gradesArray); i++) {
             System.out.print('0');
         }
@@ -61,9 +62,9 @@ public class Program {
                 System.out.println("Grade : " + tmpGrade + "iteration : " + j);
                 gradesArray = storeDigit(gradesArray, tmpGrade, i);
             }
-            for (int j = 0; j < 9; j++) {
+            // extract digits stored in gradesArray
+            for (int j = 8; j >= 0; j--) {
                 long digit = extractDigit(gradesArray, j);
-                System.out.println("Digit : " + digit + "iteration : " + j);
             }
             break;
             // System.out.println("Grade : " + grade);
