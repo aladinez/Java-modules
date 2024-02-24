@@ -54,6 +54,7 @@ public class Program {
                 System.err.println("IllegalArgument");
                 return;
             }
+            // todo: iterate over 5 grades and store the lowest.
             for (int j = 0; j < 9; j++) {
                 int tmpGrade = sc.nextInt(); // read grades
                 if (tmpGrade < grade)
