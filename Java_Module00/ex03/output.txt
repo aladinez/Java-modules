@@ -1,0 +1,70 @@
+Week 1
+1 1 1 1 1
+Week 2
+2 2 2 2 2
+Week 3
+3 3 3 3 3
+Week 4
+4 4 4 4 4
+Week 5
+5 5 5 5 5
+Week 6
+6 6 6 6 6
+Week 7
+7 7 7 7 7
+Week 8
+8 8 8 8 8
+Week 9
+6 6 6 6 6
+Week 10
+6 6 6 6 6
+Week 11
+6 6 6 6 6
+Week 12
+4 4 4 4 4
+Week 13
+5 5 5 5 5
+Week 14
+6 6 6 6 6
+Week 15
+7 7 7 7 7
+Week 16
+8 8 8 8 8
+Week 17
+9 9 9 9 9
+Week 18
+5 5 5 5 5
+Week 1 =>
+Week 2 ==>
+Week 3 ===>
+Week 4 ====>
+Week 5 =====>
+Week 6 ======>
+Week 7 =======>
+Week 8 ========>
+Week 9 ========>
+Week 10 ==>
+Week 11 ===>
+Week 12 ====>
+Week 13 =====>
+Week 14 ======>
+Week 15 =======>
+Week 16 ========>
+Week 17 =========>
+Week 18 =====>
+
+
+
+Week 1
+4 5 2 4 2
+Week 2
+7 7 7 7 6
+Week 3
+4 3 4 9 8
+Week 4
+9 9 4 6 7
+42
+Week 1 ==>
+Week 2 ======>
+Week 3 ===>
+Week 
