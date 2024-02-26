@@ -4,9 +4,71 @@ import java.util.Scanner;
 
 public class Program {
 
-    public static int height(int occurence, int coefficient) {
-        return occurence * coefficient;
+    public static boolean isPrintHash(int occurences, int maxOccurences, int i) {
+        int coefficient = 10000 / maxOccurences;
+
+        coefficient++;
+        int result = (occurences * coefficient);
+        if (result >= i + 1000) {
+            return true;
+        }
+        return false;
     }
+
+    public static boolean isPrintOccurences(int occurences, int maxOccurences, int i) {
+        int coefficient = 10000 / maxOccurences;
+
+        coefficient++;
+        int result = occurences * coefficient;
+        if (result > i  && result < i + 1000) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean isPrintSpace(int occurences, int maxOccurences, int i) {
+        int coefficient = 10000 / maxOccurences;
+
+        coefficient++;
+        int result = (occurences * coefficient);
+        if (result < i) {
+            return true;
+        }
+        return false;
+    }
+
+    // print the most 10 frequent characters in histogram format
+    public static void printHistogram(int[] occurences, int[] occurencesLength, int[] mostFrequentCharacters) {
+        String cell = "";
+
+        System.out.println();
+        for (int i = 10; i >= 0; i--) {
+            for (int j = 0; j < 10; j++) {
+                if (isPrintOccurences(occurences[j], occurences[0], i * 1000)) {
+                    cell = occurences[j] + "";
+                    for (int k = 0; k < 4 - occurencesLength[j]; k++) { // add spaces to align the numbers
+                        cell = " " + cell;
+                    }
+                    System.out.print(cell);
+                }
+                else if (isPrintHash(occurences[j], occurences[0], i * 1000)) {
+                    cell = "   #";
+                    System.out.print(cell);
+                }
+                else if (isPrintSpace(occurences[j], occurences[0], i * 1000)) {
+                    cell = "    ";
+                    System.out.print(cell);
+                }
+            }
+            System.out.println();
+        }
+        for (int j = 0; j < 10; j++) {
+            cell = "   " + ((char)mostFrequentCharacters[j]);
+            System.out.print(cell);
+        }
+        System.out.println();
+    }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         String input;
@@ -26,13 +88,6 @@ public class Program {
         for (int i = 0; i < characters.length; i++) {
             charOccurences[characters[i]]++;
         }
-        
-        // print occurences of each character
-        for (int i = 0; i < charOccurences.length; i++) {
-            if (charOccurences[i] > 0) {
-                System.out.println((char) i + " " + charOccurences[i]);
-            }
-        }
 
         // extract the most 10 frequent characters
         for (int i = 0; i < 10; i++) {
@@ -51,36 +106,13 @@ public class Program {
             }
         }
 
-        // print the most 10 frequent characters
+        // create occurences length array
+        int[] occurencesLength = new int[10];
         for (int i = 0; i < 10; i++) {
-            if (mostFrequentCharacters[i] > 0) {
-                System.out.println("==>" + (char) mostFrequentCharacters[i] + " " + occurences[i]);
-            }
-        }
-        // calculate coefficient
-        float coefficient =  10 / occurences[0];
-        int [] tmpOccurences = new int[10];
-        for (int i = 0; i < 10; i++) {
-            tmpOccurences[i] = occurences[i];
+            occurencesLength[i] = (occurences[i] + "").length();
         }
         
-        // TODO: print the most 10 frequent characters in histogram format
-        for (int i = 0; i < 12; i++) {
-            for (int j = 0; j < 10; j++) {
-                if (tmpOccurences[j] * coefficient == occurences[j]) {
-                    System.out.print(occurences[j] + "  ");
-                    tmpOccurences[j]--;
-                }
-                else if (tmpOccurences[j] * coefficient < occurences[j]) {
-                    System.out.print("#  ");
-                    tmpOccurences[j]--;
-                }
-                if (i == 11) {
-                    System.out.print((char) mostFrequentCharacters[j] + "  ");
-                }
-                
-            }
-            System.out.println();
-        }
+        // print the most 10 frequent characters in histogram format
+        printHistogram(occurences, occurencesLength, mostFrequentCharacters);
     }
 }
