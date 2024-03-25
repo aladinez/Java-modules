@@ -102,3 +102,22 @@ Mike 2 28 NOT_HERE
 John 4 9 HERE
 Mike 4 9 HERE
 .
+
+John
+Mike
+bilal
+.
+1 MO
+6 MO
+5 SU
+3 TH
+.
+Mike 2 28 NOT_HERE
+John 4 9 HERE
+bilal 3 10 HERE
+bilal 6 7 NOT_HERE
+bilal 1 29 HERE
+Mike 5 6 NOT_HERE
+Mike 5 20 HERE
+Mike 4 9 HERE
+.

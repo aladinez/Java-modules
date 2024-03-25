@@ -27,7 +27,7 @@ public class Program {
         }
         for (int i = 0; i < times.length; i++) {
             if (times[i] == timeAndDayChars[0]) {
-                return i + 1;
+                return i;
             }
         }
         return -1;
@@ -40,6 +40,66 @@ public class Program {
             }
         }
         return -1;
+    }
+
+    public static int[] getDaysInMonthFromDayOfWeek(int dayIndex) {
+        int[] daysInMonth = new int[5];
+        // September 1, 2020 was a Tuesday (dayIndex = 1)
+        if (dayIndex == 0) {
+            dayIndex += 7;
+        }
+        for (int i = 0; i < 5 && dayIndex <= 30; i++) {
+            daysInMonth[i] = dayIndex;
+            dayIndex += 7;
+        }
+
+        return daysInMonth;
+    }
+
+    public static void printSpaces(int n) {
+        for (int i = 0; i < n; i++) {
+            System.out.print(" ");
+        }
+    }
+
+    public static void printPopulationTable(String[] studentsNames, int[][][] attendance) {
+        String[] clockTimes = {"1:00", "2:00", "3:00", "4:00", "5:00", "6:00"};
+        String[] weekDays = {"MO", "TU", "WE", "TH", "FR", "SA", "SU"};
+        int i = 0;
+        printSpaces(10);
+        for (int j = 0; j < 30; j++) {
+            for (int k = 0; k < 6; k++) {
+                if (attendance[i][j][k] == 1) {
+                    String buffer = clockTimes[k] + " " + weekDays[(j + 1) % 7] + " " + (j + 1) + "|";
+                    printSpaces(11 - buffer.length());
+                    System.out.print(buffer);
+                }
+            }
+        }
+        System.out.println();
+
+        for(i = 1; i < 10 && studentsNames[i - 1] != null; i++) {
+
+            System.out.print(studentsNames[i - 1]);
+            printSpaces(10 - studentsNames[i - 1].length());
+            for (int j = 0; j < 30; j++) {
+                for (int k = 0; k < 6; k++) {
+                    if (attendance[i][j][k] == 1) {
+                        printSpaces(11 - "1|".length());
+                        System.out.print("1|");
+                    }
+                    else if (attendance[i][j][k] == 2) {
+                        printSpaces(11 - "-1|".length());
+                        System.out.print("-1|");
+                    }
+                    else if (attendance[0][j][k] == 1){
+                        printSpaces(11 - "|".length());
+                        System.out.print("|");
+                    }
+                }
+            }
+            System.out.println();
+        }
     }
 
     public static void main(String[] args) {
@@ -66,8 +126,13 @@ public class Program {
             // time and day is in the format "2 MO", "4 WE"
             int timeIndex = getTimeIndex(timeAndDay);
             int dayIndex = getDayIndex(timeAndDay);
+            int[] allDaysOfMonthfromDayOfWeek = getDaysInMonthFromDayOfWeek(dayIndex);
+
             // fill the attendance array
-            attendance[0][dayIndex][timeIndex] = 1;
+            for (int j = 0; j < 5; j++) {
+                if (allDaysOfMonthfromDayOfWeek[j] != 0)
+                    attendance[0][allDaysOfMonthfromDayOfWeek[j] - 1][timeIndex] = 1;
+            }
         }
 
         // scan attendances of the students in the 3d array, input will be the name of student, then time, then day of month, then here or not here like "Mike 2 28 NOT_HERE", "John 4 9 HERE"
@@ -77,33 +142,21 @@ public class Program {
                 break;
             }
             int studentIndex = getStudentIndex(studentName, studentsNames);
+            //print student index and name
+            // System.out.println(studentIndex + " " + studentName);
             int timeIndex = scanner.nextInt();
             int dayIndex = scanner.nextInt();
             String hereOrNotHere = scanner.next();
             if (hereOrNotHere.equals("HERE")) {
-                attendance[studentIndex + 1][dayIndex][timeIndex] = 1;
+                attendance[studentIndex + 1][dayIndex - 1][timeIndex - 1] = 1;
             } else {
-                attendance[studentIndex + 1][dayIndex][timeIndex] = 2;
+                attendance[studentIndex + 1][dayIndex - 1][timeIndex - 1] = 2;
             }
         }
+        // print population table 
+        printPopulationTable(studentsNames, attendance);
+        
 
-        // pretty print the attendance of all students 
-        for (int i = 0; i < 10; i++) {
-            System.out.println(studentsNames[i]);
-            for (int j = 0; j < 30; j++) {
-                System.out.print(j + 1 + " ");
-                for (int k = 0; k < 6; k++) {
-                    if (attendance[i + 1][j][k] == 1) {
-                        System.out.print("X ");
-                    } else if (attendance[i + 1][j][k] == 2) {
-                        System.out.print("0 ");
-                    }
-                    else {
-                        System.out.print("- ");
-                    }
-                }
-                System.out.println();
-            }
-        }
+        scanner.close();
     }
 }
