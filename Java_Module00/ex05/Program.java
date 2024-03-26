@@ -84,11 +84,11 @@ public class Program {
             printSpaces(10 - studentsNames[i - 1].length());
             for (int j = 0; j < 30; j++) {
                 for (int k = 0; k < 6; k++) {
-                    if (attendance[i][j][k] == 1) {
+                    if (attendance[0][j][k] == 1 && attendance[i][j][k] == 1) {
                         printSpaces(11 - "1|".length());
                         System.out.print("1|");
                     }
-                    else if (attendance[i][j][k] == 2) {
+                    else if (attendance[0][j][k] == 1 && attendance[i][j][k] == 2) {
                         printSpaces(11 - "-1|".length());
                         System.out.print("-1|");
                     }
