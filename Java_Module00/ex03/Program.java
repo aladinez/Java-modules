@@ -1,5 +1,3 @@
-package Java_Module00.ex03;
-
 import java.util.Scanner;
 
 public class Program {
@@ -61,7 +59,7 @@ public class Program {
             if (!week.equals("Week " + (i + 1))) {
                 sc.close();
                 System.err.println("IllegalArgument");
-                return;
+                System.exit(-1);
             }
             // iterate over 5 grades and store the lowest.
             for (int j = 0; j < 5; j++) {

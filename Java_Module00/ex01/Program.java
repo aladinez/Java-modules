@@ -14,11 +14,15 @@ public class Program {
 
         if (num <= 1){
             System.err.println("IllegalArgument");
-            return ;
+            System.exit(-1);
         }
 
         if (num % 2 == 0){
             System.out.println("false " + iterations);
+            return;
+        }
+        else if (num == 3){
+            System.out.println("true " + iterations);
             return;
         }
         iterations++;

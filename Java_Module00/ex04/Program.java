@@ -1,5 +1,3 @@
-package Java_Module00.ex04;
-
 import java.util.Scanner;
 
 public class Program {
@@ -73,7 +71,7 @@ public class Program {
         Scanner sc = new Scanner(System.in);
         String input;
         char[] characters;
-        int[] charOccurences = new int[127];
+        int[] charOccurences = new int[65536];
         int[] mostFrequentCharacters = new int[10];
         int[] occurences = new int[10];
 

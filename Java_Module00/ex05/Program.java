@@ -1,5 +1,3 @@
-package Java_Module00.ex05;
-
 import java.util.Scanner;
 
 public class Program {
