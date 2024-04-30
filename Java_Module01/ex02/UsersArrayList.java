@@ -19,7 +19,7 @@ class UsersArrayList implements UsersList {
         users = temp;
     }
 
-    public User getById(int id) {
+    public User getById(int id) throws UserNotFoundException {
         for (User user : users) {
             if (user.getId() == id) {
                 return user;
@@ -28,11 +28,21 @@ class UsersArrayList implements UsersList {
         throw new UserNotFoundException("User not found by id: " + id);
     }
 
-    public User getByIndex(int index) {
+    public User getByIndex(int index) throws  UserNotFoundException {
         if (index > 0 && index < users.length && users[index] != null) {
             return users[index];
         }
         throw new UserNotFoundException("User not found by index: " + index);
 
+    }
+
+    public int getNumberOfUsers() {
+        int count = 0;
+        for (User user : users) {
+            if (user != null) {
+                count++;
+            }
+        }
+        return count;
     }
 }

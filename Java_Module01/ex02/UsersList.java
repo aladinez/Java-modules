@@ -7,11 +7,10 @@ public interface UsersList {
 
     public void add(User user);
 
-    public User getById(int id);
+    public User getById(int id) throws UserNotFoundException;
 
-    public User getByIndex(int index);
+    public User getByIndex(int index) throws UserNotFoundException;
 
     public int getNumberOfUsers();
 
-    public void removeUser(User user);
 }
