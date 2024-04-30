@@ -1,28 +1,32 @@
 
-
 class Program {
 
     public static void main(String[] args) {
-        // (creation,initialization, printing object content on a console for UsersList.java
         UsersList usersArrayList = new UsersArrayList();
-        User user1 = new User("John", 100);
-        User user2 = new User("Jane", 200);
-        User user3 = new User("Bob", 300);
-        usersArrayList.add(user1);
-        usersArrayList.add(user2);
-        usersArrayList.add(user3);
-        System.out.println(usersArrayList.getByIndex(0).getName());
 
-        // (creation,initialization, printing object content on a console for UsersArrayList.java
-        User user4 = new User("John", 100);
-        User user5 = new User("Jane", 200);
-        User user6 = new User("Bob", 300);
-        usersArrayList.add(user4);
-        usersArrayList.add(user5);
-        usersArrayList.add(user6);
-        System.out.println(usersArrayList.getByIndex(0).getName());
-        
-        
+        User[] users = {
+            new User("John", 100),
+            new User("Jane", 200),
+            new User("Bob", 300),
+            new User("John", 100),
+            new User("Jane", 200),
+            new User("Bob", 300)
+        };
+
+        for (User user : users) {
+            usersArrayList.add(user);
+        }
+        System.out.println("Number of users : " + usersArrayList.getNumberOfUsers());
+        for (int i = 0; i < usersArrayList.getNumberOfUsers(); i++) {
+            System.out.println(usersArrayList.getByIndex(i).getName() + " == " + usersArrayList.getByIndex(i).getBalance() + " == " + usersArrayList.getByIndex(i).getId());
+        }
+
+        System.out.println("========== add more than 10 users ==========");
+        for (int i = 0; i < 10; i++) {
+            usersArrayList.add(new User("User" + i, 100));
+        }
+
+        System.out.println("Number of users : " + usersArrayList.getNumberOfUsers());
 
     }
 }
