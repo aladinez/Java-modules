@@ -67,7 +67,7 @@ class UsersArrayList implements UsersList {
     public int getNumberOfUsers() {
         int count = 0;
         for (User user : users) {
-            if (user != null) {
+            if (user != null && user != null) {
                 count++;
             }
         }

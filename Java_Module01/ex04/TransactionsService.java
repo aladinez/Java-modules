@@ -21,14 +21,6 @@ class TransactionsService {
         User sender = usersList.getById(senderId);
         User recipient = usersList.getById(recipientId);
 
-        if (sender == null) {
-            throw new UserNotFoundException("User with id " + senderId + " not found");
-        }
-
-        if (recipient == null) {
-            throw new UserNotFoundException("User with id " + recipientId + " not found");
-        }
-
         if (sender.getBalance() < amount) {
             throw new IllegalTransactionException("User with id " + senderId + " has insufficient funds");
         }

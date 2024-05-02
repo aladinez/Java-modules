@@ -4,7 +4,7 @@ public class UserIdsGenerator {
     private int id;
 
     private UserIdsGenerator() {
-        id = 0;
+        id = 1;
     }
 
     public static UserIdsGenerator getInstance() {
