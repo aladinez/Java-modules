@@ -18,6 +18,10 @@ class TransactionsService {
         usersList.add(user);
     }
 
+    public User getUserById(int userId) {
+        return usersList.getById(userId);
+    }
+
     public int getUserBalance(int userId) {
         return usersList.getById(userId).getBalance();
     }

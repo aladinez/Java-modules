@@ -11,9 +11,9 @@ class Program {
         transactionsService.addUser(bob);
 
         // print users balance
-        System.out.println("John balance: " + transactionsService.getUserBalance(jhon));
-        System.out.println("Mike balance: " + transactionsService.getUserBalance(mike));
-        System.out.println("Bob balance: " + transactionsService.getUserBalance(bob));
+        System.out.println("John balance: " + transactionsService.getUserBalance(jhon.getId()));
+        System.out.println("Mike balance: " + transactionsService.getUserBalance(mike.getId()));
+        System.out.println("Bob balance: " + transactionsService.getUserBalance(bob.getId()));
 
         // perform transactions
         transactionsService.performTransaction(jhon.getId(), mike.getId(), 100);
@@ -21,9 +21,9 @@ class Program {
         transactionsService.performTransaction(bob.getId(), jhon.getId(), 300);
 
         // print users balance
-        System.out.println("John balance: " + transactionsService.getUserBalance(jhon));
-        System.out.println("Mike balance: " + transactionsService.getUserBalance(mike));
-        System.out.println("Bob balance: " + transactionsService.getUserBalance(bob));
+        System.out.println("John balance: " + transactionsService.getUserBalance(jhon.getId()));
+        System.out.println("Mike balance: " + transactionsService.getUserBalance(mike.getId()));
+        System.out.println("Bob balance: " + transactionsService.getUserBalance(bob.getId()));
 
         // print users transactions
         Transaction[] jhonTransactions = transactionsService.getUserTransactions(jhon.getId());
