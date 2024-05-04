@@ -9,13 +9,13 @@ class TransactionsService {
        this.usersList = new UsersArrayList();
     }
 
-    public void addUser(User user) {
-        usersList.add(user);
+    public int addUser(User user) {
+        return usersList.add(user);
     }
 
-    public void addUser(String name, int balance) {
+    public int addUser(String name, int balance) {
         User user = new User(name, balance);
-        usersList.add(user);
+        return usersList.add(user);
     }
 
     public User getUserById(int userId) {
@@ -51,10 +51,10 @@ class TransactionsService {
         return user.getTransactionsList().toArray();
     }
 
-    public void removeTransaction(int userId, UUID transactionId) {
+    public Transaction removeTransaction(int userId, UUID transactionId) {
         User user = usersList.getById(userId);
 
-        user.removeTransactionById(transactionId);
+        return user.removeTransactionById(transactionId);
     } 
 
     public boolean contains(Transaction[] transactions, UUID transactionId) {

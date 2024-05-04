@@ -16,11 +16,11 @@ class UsersArrayList implements UsersList {
      * 
      * @param user
      */
-    public void add(User user) {
+    public int add(User user) {
         for (int i = 0; i < users.length; i++) {
             if (users[i] == null) {
                 users[i] = user;
-                return;
+                return user.getId();
             }
         }
         User[] temp = new User[users.length * 2];
@@ -29,6 +29,7 @@ class UsersArrayList implements UsersList {
         }
         temp[users.length] = user;
         users = temp;
+        return user.getId();
     }
 
     /**

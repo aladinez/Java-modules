@@ -64,7 +64,7 @@ public class User {
         transactionsList.add(transaction);
     }
 
-    public void removeTransactionById(UUID id) {
-        transactionsList.removeById(id);
+    public Transaction removeTransactionById(UUID id) {
+        return transactionsList.removeById(id);
     }
 }

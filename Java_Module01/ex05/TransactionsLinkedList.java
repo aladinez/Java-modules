@@ -37,7 +37,7 @@ public class TransactionsLinkedList implements TransactionsList {
      * @param id
      * @return transaction
      */
-    public void removeById(UUID id) {
+    public Transaction removeById(UUID id) {
         Transaction current = head;
         Transaction previous = null;
 
@@ -49,7 +49,7 @@ public class TransactionsLinkedList implements TransactionsList {
                     previous.setNext(current.getNext());
                 }
                 size--;
-                return;
+                return current;
             }
             previous = current;
             current = current.getNext();

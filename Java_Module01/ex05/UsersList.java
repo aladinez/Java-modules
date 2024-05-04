@@ -5,7 +5,7 @@
  */
 public interface UsersList {
 
-    public void add(User user);
+    public int add(User user);
 
     public User getById(int id);
 
