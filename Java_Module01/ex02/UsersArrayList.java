@@ -39,7 +39,7 @@ class UsersArrayList implements UsersList {
      */
     public User getById(int id) {
         for (User user : users) {
-            if (user.getId() == id) {
+            if (user != null && user.getId() == id) {
                 return user;
             }
         }
@@ -67,7 +67,7 @@ class UsersArrayList implements UsersList {
     public int getNumberOfUsers() {
         int count = 0;
         for (User user : users) {
-            if (user != null && user != null) {
+            if (user != null) {
                 count++;
             }
         }

@@ -28,5 +28,7 @@ class Program {
 
         System.out.println("Number of users : " + usersArrayList.getNumberOfUsers());
 
+        usersArrayList.getById(19);
+
     }
 }

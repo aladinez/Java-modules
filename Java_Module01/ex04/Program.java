@@ -60,5 +60,8 @@ class Program {
         for (Transaction transaction : unpairedTransactions) {
             System.out.println(transaction.getId());
         }
+
+        // exception
+        transactionsService.performTransaction(jhon.getId(), mike.getId(), 10000);
     }
 }
