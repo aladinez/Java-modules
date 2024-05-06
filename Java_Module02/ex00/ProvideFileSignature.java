@@ -6,26 +6,25 @@ import java.util.Scanner;
 
 public class ProvideFileSignature {
     
-    private FileInputStream fileInputStream;
-    private FileOutputStream fileOutputStream;
+    private static FileOutputStream fileOutputStream;
     private static final String OUTPUT_FILE = "results.txt";
+    private static final String SIGNATURES_FILE = "signatures.txt";
     // map that contains the format name and its signature
-    private Map<String, String> fileSignatures;
+    private static Map<String, String> fileSignatures;
 
     public ProvideFileSignature() {
         try {
-            this.fileOutputStream = new FileOutputStream(OUTPUT_FILE);
+            fileOutputStream = new FileOutputStream(OUTPUT_FILE, true);
         } catch (Exception e) {
             System.out.println("Error: " + e);
         }
-        // set files signatures from signature.txt that contains the format name and its signature as follow : GIF, 47 49 46 38 37 61
         this.setFileSignatures();
     }
 
     private void setFileSignatures() {
         fileSignatures = new HashMap<>();
         try {
-            FileInputStream fileInputStream = new FileInputStream("signatures.txt");
+            FileInputStream fileInputStream = new FileInputStream(SIGNATURES_FILE);
             Scanner scanner = new Scanner(fileInputStream);
             while (scanner.hasNextLine()) {
                 String[] line = scanner.nextLine().split(", ");
@@ -33,12 +32,13 @@ public class ProvideFileSignature {
                 fileSignatures.put(line[0], line[1]);
             }
             scanner.close();
+            fileInputStream.close();
         } catch (Exception e) {
             System.out.println("Error: " + e);
         }
     }
 
-    private String bytesToHex(byte[] bytes) {
+    private static String bytesToHex(byte[] bytes) {
         StringBuilder hexString = new StringBuilder();
         for (byte b : bytes) {
             hexString.append(String.format("%02X", b));
@@ -46,16 +46,9 @@ public class ProvideFileSignature {
         return hexString.toString();
     }
 
-    public void setfileInputStream(String fileInputStream) {
+    public static void execute(String filePath) {
         try {
-            this.fileInputStream = new FileInputStream(fileInputStream);
-        } catch (Exception e) {
-            System.out.println("Error: " + e);
-        }
-    }
-
-    public void execute() {
-        try {
+            FileInputStream fileInputStream = new FileInputStream(filePath);
             byte[] bytes = new byte[8];
             fileInputStream.read(bytes);
             String signature = bytesToHex(bytes);
