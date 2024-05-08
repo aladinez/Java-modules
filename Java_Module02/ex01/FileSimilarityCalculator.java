@@ -1,6 +1,8 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,5 +56,37 @@ public class FileSimilarityCalculator {
         for (Map.Entry<String, int[]> entry : wordFrequencyMap.entrySet()) {
             System.out.println(entry.getKey() + " : " + entry.getValue()[0] + " " + entry.getValue()[1]);
         }
+
+        // calculate the similarity
+        double similarity = calculateSimilarity();
+        DecimalFormat df = new DecimalFormat("#.##");
+        df.setRoundingMode(RoundingMode.FLOOR);
+        System.out.println("Similarity = " + df.format(similarity));
+    }
+
+    public double calculateSimilarity() {
+        double numerator = getNumerator();
+        double denominator = getDenominator();
+
+        return numerator / denominator;
+
+
+    }
+    public double getNumerator() {
+        double numerator = 0;
+        for (Map.Entry<String, int[]> entry : wordFrequencyMap.entrySet()) {
+            numerator += entry.getValue()[0] * entry.getValue()[1];
+        }
+        return numerator;
+    }
+
+    public double getDenominator() {
+        double sum1 = 0;
+        double sum2 = 0;
+        for (Map.Entry<String, int[]> entry : wordFrequencyMap.entrySet()) {
+            sum1 += entry.getValue()[0] * entry.getValue()[0];
+            sum2 += entry.getValue()[1] * entry.getValue()[1];
+        }
+        return Math.sqrt(sum1) * Math.sqrt(sum2);
     }
 }
