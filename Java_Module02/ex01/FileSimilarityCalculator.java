@@ -1,4 +1,6 @@
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.math.RoundingMode;
@@ -10,9 +12,8 @@ public class FileSimilarityCalculator {
 
     BufferedReader bufferedReader1;
     BufferedReader bufferedReader2;
+    private static final int MAX_FILE_SIZE = 1024 * 1024 * 10;
     Map<String, int[]> wordFrequencyMap = new HashMap<String, int[]>();
-
-    
 
     public void fillDictionary(BufferedReader bufferedReader, int index) {
         String line;
@@ -39,39 +40,46 @@ public class FileSimilarityCalculator {
     }
     
     public void execute(String file1, String file2) {
-        try {
+        try (FileOutputStream fileOutputStream = new FileOutputStream("dictionary.txt");) {
+            File filex = new File(file1);
+            File filey = new File(file2);
+            if (!filex.exists() && filey.exists() && (filex.length() > MAX_FILE_SIZE || filey.length() > MAX_FILE_SIZE)) {
+                System.out.println("Error: file size is too large");
+                return;
+            }
+
             bufferedReader1 = new BufferedReader(new FileReader(file1));
-            //fill Dictionary from file1
             fillDictionary(bufferedReader1, 0);
             bufferedReader1.close();
             
             bufferedReader2 = new BufferedReader(new FileReader(file2));
-            //fill Dictionary from file2
             fillDictionary(bufferedReader2, 1);
             bufferedReader2.close();
+
+            // calculate similarity
+            double similarity = calculateSimilarity();
+            DecimalFormat df = new DecimalFormat("#.##");
+            df.setRoundingMode(RoundingMode.FLOOR);
+
+            System.out.println("Similarity = " + df.format(similarity));
+            for (Map.Entry<String, int[]> entry : wordFrequencyMap.entrySet()) {
+                fileOutputStream.write((entry.getKey() + "\n").getBytes());
+            }
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
+            return;
         }
-        // pretty print the wordFrequencyMap
-        for (Map.Entry<String, int[]> entry : wordFrequencyMap.entrySet()) {
-            System.out.println(entry.getKey() + " : " + entry.getValue()[0] + " " + entry.getValue()[1]);
-        }
-
-        // calculate the similarity
-        double similarity = calculateSimilarity();
-        DecimalFormat df = new DecimalFormat("#.##");
-        df.setRoundingMode(RoundingMode.FLOOR);
-        System.out.println("Similarity = " + df.format(similarity));
     }
 
     public double calculateSimilarity() {
         double numerator = getNumerator();
         double denominator = getDenominator();
-
+        if (denominator == 0 || numerator == 0) {
+            return 0;
+        }
         return numerator / denominator;
-
-
     }
+
     public double getNumerator() {
         double numerator = 0;
         for (Map.Entry<String, int[]> entry : wordFrequencyMap.entrySet()) {
