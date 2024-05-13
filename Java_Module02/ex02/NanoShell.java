@@ -2,18 +2,31 @@ import java.io.File;
 import java.util.Scanner;
 
 public class NanoShell {
-    
+    private String currentDirectory;
+    private Scanner sc;
 
+    public NanoShell(String initialDirectory) {
+        currentDirectory = initialDirectory;
+        sc = new Scanner(System.in);
+    }
 
-    public void execute(String path) {
-        Scanner sc = new Scanner(System.in);
+    public void execute() {
         String command = "";
-        while (!command.equals("exit")) {
-            System.setProperty("user.dir", path);
-            System.out.println(System.getProperty("user.dir"));
+        try {
+            File initDir = new File(currentDirectory);
+            if (!initDir.exists() || !initDir.isDirectory()) {
+                System.out.println("Folder not found");
+                return;
+            }
+            System.out.println(initDir.getCanonicalPath());
+        } catch (Exception e) {
+            System.out.println("Error: Folder not found");
+            return;
+        }
+        while (!command.trim().equals("exit")) {
             command = sc.nextLine();
             if (command.startsWith("ls")) {
-                ls(path);
+                ls();
             } else if (command.startsWith("mv")) {
                 String[] parts = command.split(" ");
                 if (parts.length == 3) {
@@ -28,14 +41,16 @@ public class NanoShell {
                 } else {
                     System.out.println("Usage: cd FOLDER_NAME");
                 }
+            } else if (!command.trim().equals("exit")) {
+                System.out.println("Unknown command");
             }
         }
+        sc.close();
     }
 
-    //  displays the current folder contents (file and subfolder names and sizes in KB)
-    public void ls(String path) {
+    public void ls() {
         try {
-            File dir = new File(path);
+            File dir = new File(currentDirectory);
             File[] files = dir.listFiles();
             for (File file : files) {
                 System.out.println(file.getName() + " " + file.length() / 1024 + "KB");
@@ -45,37 +60,33 @@ public class NanoShell {
         }
     }
 
-    // mv WHAT WHERE - enables to transfer or rename a file if WHERE contains a file name without a path.
     public void mv(String what, String where) {
         try {
-            File file = new File(what);
-            File newFile = new File(where);
+            File file = new File(currentDirectory,  what);
+            File newFile = new File(currentDirectory, where);
             if (newFile.isDirectory()) {
-                newFile = new File(where + "/" + file.getName());
+                newFile = new File(newFile.getCanonicalPath(), file.getName());
                 file.renameTo(newFile);
             } else {
-                // rename file
-                file.renameTo(newFile);
+                file.renameTo(newFile.getAbsoluteFile());
             }
         } catch (Exception e) {
             System.out.println("File not found");
         }
     }
 
-    // cd FOLDER_NAME - changes the current directory
     public void cd(String folderName) {
         try {
-            File dir = new File(folderName);
+            File dir;
+            dir = new File(currentDirectory, folderName);
             if (dir.isDirectory()) {
-                System.setProperty("user.dir", dir.getAbsolutePath());
-                // print path
-                System.out.println(System.getProperty("user.dir"));
+                currentDirectory = dir.getCanonicalPath();
+                System.out.println(currentDirectory);
             } else {
                 System.out.println("Folder not found");
             }
         } catch (Exception e) {
-            System.out.println("Folder not found");
+            System.out.println("Error: Folder not found");
         }
     }
-
 }

@@ -43,8 +43,9 @@ public class FileSimilarityCalculator {
         try (FileOutputStream fileOutputStream = new FileOutputStream("dictionary.txt");) {
             File filex = new File(file1);
             File filey = new File(file2);
-            if (!filex.exists() && filey.exists() && (filex.length() > MAX_FILE_SIZE || filey.length() > MAX_FILE_SIZE)) {
-                System.out.println("Error: file size is too large");
+            if (!filex.exists() || !filey.exists() || !filex.isFile() || !filey.isFile()
+            || filex.length() > MAX_FILE_SIZE || filey.length() > MAX_FILE_SIZE) {
+                System.out.println("Error: files not supported");
                 return;
             }
 
@@ -58,8 +59,8 @@ public class FileSimilarityCalculator {
 
             // calculate similarity
             double similarity = calculateSimilarity();
-            DecimalFormat df = new DecimalFormat("#.##");
-            df.setRoundingMode(RoundingMode.FLOOR);
+            DecimalFormat df = new DecimalFormat("#.###");
+            // df.setRoundingMode(RoundingMode.FLOOR);
 
             System.out.println("Similarity = " + df.format(similarity));
             for (Map.Entry<String, int[]> entry : wordFrequencyMap.entrySet()) {
@@ -81,7 +82,7 @@ public class FileSimilarityCalculator {
     }
 
     public double getNumerator() {
-        double numerator = 0;
+        double numerator = 0.0;
         for (Map.Entry<String, int[]> entry : wordFrequencyMap.entrySet()) {
             numerator += entry.getValue()[0] * entry.getValue()[1];
         }
@@ -89,8 +90,8 @@ public class FileSimilarityCalculator {
     }
 
     public double getDenominator() {
-        double sum1 = 0;
-        double sum2 = 0;
+        double sum1 = 0.0;
+        double sum2 = 0.0;
         for (Map.Entry<String, int[]> entry : wordFrequencyMap.entrySet()) {
             sum1 += entry.getValue()[0] * entry.getValue()[0];
             sum2 += entry.getValue()[1] * entry.getValue()[1];

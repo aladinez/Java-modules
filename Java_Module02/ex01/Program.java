@@ -5,11 +5,7 @@ public class Program {
             return;
         }
 
-        String file1 = args[0];
-        String file2 = args[1];
-        
-        // create a new instance of FileSimilarityCalculator
         FileSimilarityCalculator fsc = new FileSimilarityCalculator();
-        fsc.execute(file1, file2);
+        fsc.execute(args[0], args[1]);
     }
 }
